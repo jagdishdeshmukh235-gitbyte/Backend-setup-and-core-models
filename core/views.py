@@ -6,7 +6,6 @@ from django.contrib.auth.hashers import make_password
 from .models import Project, Task
 from .serializers import ProjectSerializer, TaskSerializer, UserSerializer
 
-
 # Project ViewSet
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
