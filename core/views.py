@@ -38,6 +38,14 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
+class ProjectListView(APIView):
+    def get(self, request):
+        return Response({"message": "List of projects"})
+
+class TaskListView(APIView):
+    def get(self, request):
+        return Response({"message": "List of tasks"})
+
 
 # ---------------------------------------------------
 #   LOGIN VIEW (JWT TOKEN)
