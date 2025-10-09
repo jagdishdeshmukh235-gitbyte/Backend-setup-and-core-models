@@ -1,33 +1,24 @@
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
+from rest_framework import viewsets, permissions, generics
+from django.contrib.auth import get_user_model
 from .models import Project, Task
-from .serializers import ProjectSerializer, TaskSerializer, UserSerializer
+from .serializers import ProjectSerializer, TaskSerializer, RegisterSerializer
 
-# Project ViewSet
+User = get_user_model()
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [permissions.AllowAny]
+
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
-# Task ViewSet
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
-
-# Register View (for new users)
-class RegisterView(APIView):
-    def post(self, request):
-        data = request.data
-        if User.objects.filter(username=data.get("username")).exists():
-            return Response({"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = User.objects.create(
-            username=data.get("username"),
-            email=data.get("email"),
-            password=make_password(data.get("password"))
-        )
-        return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+    permission_classes = [permissions.IsAuthenticated]
