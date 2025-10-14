@@ -42,6 +42,9 @@ class TasklistCreateView(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
+        project_id = self.request.query_params.get('project')  # Filter tasks by project
+        if project_id:
+            return Task.objects.filter(owner=self.request.user, project_id=project_id)
         # only show logged-in user's tasks
         return Task.objects.filter(owner=self.request.user)
     

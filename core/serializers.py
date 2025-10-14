@@ -19,6 +19,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'   # ✅ Correct: double underscores, not '__all__'
+        read_only_fields = ['owner']
 
 
 # -------------------------------

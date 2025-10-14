@@ -3,7 +3,7 @@
 from django.urls import path, include
 from rest_framework import routers
 from . import views
-from .views import ProjectListCreateView, ProjectDetailView
+from .views import ProjectListCreateView, ProjectDetailView, TasklistCreateView, TaskDetailView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from core.views import (
     ProjectViewSet,
@@ -29,6 +29,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('projects/', views.ProjectListCreateView.as_view(), name='project-list-create'),
     path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
+    path('tasks/', views.TasklistCreateView.as_view(), name='task-list-create'),
+    path('tasks/<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
 
     # JWT Token authentication endpoints
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
