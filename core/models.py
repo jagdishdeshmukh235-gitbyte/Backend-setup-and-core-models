@@ -14,23 +14,24 @@ class Project(models.Model):
         return self.name
 
 class Task(models.Model):
-     STATUS_CHOICES = [
+    STATUS_CHOICES = [
         ('todo', 'To Do'),
         ('inprogress', 'In Progress'),
         ('done', 'Done'),
     ]
-     
-     project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
-     title = models.CharField(max_length=100)
-     description = models.TextField(blank=True)
-     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
-     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='tasks')
-     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks',default=1)
-     created_at = models.DateTimeField(default=timezone.now)
-     updated_at = models.DateTimeField(auto_now=True)
-     due_date = models.DateField(null=True, blank=True)
-     completed = models.BooleanField(default=False)
-     assigned_to = models.ForeignKey(User, related_name='assigned_tasks', on_delete=models.CASCADE, null=True, blank=True)
+    
+    project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
 
-     def _str_(self):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
+    assigned_to = models.ForeignKey(User, related_name='assigned_tasks', on_delete=models.CASCADE, null=True, blank=True)
+
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    due_date = models.DateField(null=True, blank=True)
+    completed = models.BooleanField(default=False)
+
+    def _str_(self):
         return self.title
