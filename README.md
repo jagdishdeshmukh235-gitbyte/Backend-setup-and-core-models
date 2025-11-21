@@ -32,13 +32,13 @@ Light and secure database for storing all tasks.
 Easy to use and quick response testing inside VS Code.
 
 Technologies Used:-
-Component:	          Technology:
-Backend Framework	  Django
-API Framework	          Django REST Framework
-Database	          SQLite
-Testing Tool	          Thunder Client
-Language	          Python
-Editor	                  VS Code
+Component & Technology:
+Backend Framework: Django, 
+API Framework: Django REST Framework, 
+Database: SQLite, 
+Testing Tool: Thunder Client,
+Language: Python,
+Editor: VS Code
 
 Installation & Setup:-
 Follow these steps to run the project locally:
